@@ -30,7 +30,7 @@ public class UI_Hexes : MonoBehaviour {
     // Use this for initialization
     void Start() {
 
-                for(int i = 0; i < 4; ++i)
+        for(int i = 0; i < 4; ++i)
         {
             if (i == 1)
                 One();

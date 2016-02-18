@@ -14,6 +14,7 @@ namespace UnityStandardAssets.Utility
         // the height we want the camera to be above the target
         //[SerializeField]
         private float height = 5.0f;
+        private float playerCameraDist;
         private float xRotate;
 
 
@@ -42,10 +43,10 @@ namespace UnityStandardAssets.Utility
             if (Input.GetMouseButton(1))
             {
                 xRotation += speedH * Input.GetAxis("Mouse X");
-                yRotation -= speedV * Input.GetAxis("Mouse Y");
+                //yRotation -= speedV * Input.GetAxis("Mouse Y");
 
 
-                transform.eulerAngles = new Vector3(yRotation, xRotation, 0.0f);
+                transform.eulerAngles = new Vector3(0, xRotation, 0.0f);
             }
 
             // Gets the input of the mouse scroll
@@ -58,21 +59,32 @@ namespace UnityStandardAssets.Utility
             switch (dist)
             {
                 case 4:
-                    Debug.Log("Distance is 4");
-                    height = 1.5f;
-                    /*
-                    var rotationVector = transform.rotation.eulerAngles;
-                    rotationVector.x = 14;
-                    Debug.Log(rotationVector);
-                    transform.rotation = Quaternion.Euler(rotationVector);
-                    */
-                   // transform.rotation = Quaternion.Lerp(14f, transform.rotation.x, Time.deltaTime * 2);
+                    height = 2.5f;
                     break;
-
                 case 5:
+                    height = 3f;
+                    break;
+                case 6:
+                    height = 4f;
+                    break;
+                case 7:
                     height = 5f;
                     break;
-
+                case 8:
+                    height = 6f;
+                    break;
+                case 9:
+                    height = 7f;
+                    break;
+                case 10:
+                    height = 9f;
+                    break;
+                case 11:
+                    height = 10f;
+                    break;
+                case 12:
+                    height = 11f;
+                    break;
                 case 13:
                     height = 13;
                     break;
@@ -122,12 +134,12 @@ namespace UnityStandardAssets.Utility
             var currentRotationAngleY = transform.eulerAngles.y;
             var currentHeight = transform.position.y;
 
-            /*
+            
             var wantedRotationAngleX = target.eulerAngles.x;
             var wantedHeightX = target.position.x + height;
             var currentRotationAngleX = transform.eulerAngles.x;
             var currentXHeight = transform.position.x;
-            */
+            
 
             // Damp the rotation around the y-axis
             currentRotationAngleY = Mathf.LerpAngle(currentRotationAngleY, wantedRotationAngle, rotationDamping * Time.deltaTime);
@@ -135,8 +147,8 @@ namespace UnityStandardAssets.Utility
             // Debug.Log(currentRotationAngleY);
 
             // Damp the height
-            currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
-             Debug.Log("Current Height: " + currentHeight);
+             currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+            // Debug.Log("Current Height: " + currentHeight);
 
             // Convert the angle into a rotation
             //var currentRotation = Quaternion.Euler(currentRotationAngleX, currentRotationAngleY, 0);
@@ -146,12 +158,12 @@ namespace UnityStandardAssets.Utility
             // Set the position of the camera on the x-z plane to:
             // distance meters behind the target
             transform.position = target.position;
-            transform.position -= currentRotation * Vector3.forward * distance;
-            // Debug.Log(transform.position);
+            transform.position -= currentRotation * Vector3.forward * (distance-0.5f);
+             Debug.Log(transform.position);
             
             // Set the height of the camera
             transform.position = new Vector3(transform.position.x, height, transform.position.z);
-            Debug.Log(transform.position);
+            Debug.Log("New Position:" + transform.position);
 
 
             // Always look at the target
